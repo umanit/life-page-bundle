@@ -1,0 +1,4 @@
+umanit_life_page:
+    path: /_life
+    controller: \Umanit\LifePageBundle\Controller\LifePageAction
+    methods: [GET]
