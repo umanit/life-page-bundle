@@ -5,16 +5,26 @@ declare(strict_types=1);
 namespace Umanit\LifePageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-use Umanit\LifePageBundle\Checker\CheckerInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Umanit\LifePageBundle\Checker\ResponseBuilderInterface;
 
+/**
+ * @Route("/", name="umanit_life_page")
+ */
 class LifePageAction
 {
-    public function __invoke(CheckerInterface $checker): Response
-    {
-        if ($checker->check()) {
-            return new Response('OK');
-        }
+    public const ROUTE_NAME = 'umanit_life_page';
 
-        return new Response('KO');
+    /** @var ResponseBuilderInterface */
+    private $responseBuilder;
+
+    public function __construct(ResponseBuilderInterface $responseBuilder)
+    {
+        $this->responseBuilder = $responseBuilder;
+    }
+
+    public function __invoke(): Response
+    {
+        return $this->responseBuilder->buildResponse();
     }
 }

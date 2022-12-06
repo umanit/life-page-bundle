@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Umanit\LifePageBundle\Checker;
 
-final class ServiceChecker implements CheckerInterface
+use Umanit\LifePageBundle\DTO\Check;
+use Umanit\LifePageBundle\DTO\CheckCollection;
+
+final class ServiceChecker implements ServiceCheckerInterface
 {
     /** @var CheckerInterface[] */
     private $services;
@@ -14,14 +17,14 @@ final class ServiceChecker implements CheckerInterface
         $this->services = $services;
     }
 
-    public function check(): bool
+    public function checkAll(): array
     {
+        $collection = new CheckCollection();
+
         foreach ($this->services as $service) {
-            if (!$service->check()) {
-                return false;
-            }
+            $collection->addCheck(new Check($service->getName(), $service->check()));
         }
 
-        return true;
+        return $collection->getChecks();
     }
 }

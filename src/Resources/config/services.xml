@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="umanit_life_page.response_builder"
+                 class="Umanit\LifePageBundle\Checker\ResponseBuilder">
+            <argument type="service" id="umanit_life_page.service_checker" />
+        </service>
+        <service id="Umanit\LifePageBundle\Checker\ResponseBuilderInterface" alias="umanit_life_page.service_checker" />
+
+        <service id="umanit_life_page.controller_life_page"
+                 class="Umanit\LifePageBundle\Controller\LifePageAction" public="true">
+            <argument type="service" id="umanit_life_page.response_builder" />
+        </service>
+
+        <service id="umanit_life_page.exception_subscriber"
+                 class="Umanit\LifePageBundle\EventSubscriber\ExceptionSubscriber">
+            <argument type="service" id="umanit_life_page.response_builder" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="umanit_life_page.service_checker" class="Umanit\LifePageBundle\Checker\ServiceChecker">
+            <argument type="tagged_iterator" tag="umanit_life_page.service_checker" />
+        </service>
+        <service id="Umanit\LifePageBundle\Checker\ServiceCheckerInterface" alias="umanit_life_page.service_checker" />
+    </services>
+</container>
