@@ -17,6 +17,11 @@ final class DoctrineChecker implements CheckerInterface
         $this->entityManager = $entityManager;
     }
 
+    public function getName(): string
+    {
+        return '[Doctrine] Database connection';
+    }
+
     public function check(): bool
     {
         try {
