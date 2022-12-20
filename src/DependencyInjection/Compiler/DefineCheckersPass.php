@@ -50,7 +50,7 @@ class DefineCheckersPass implements CompilerPassInterface
             $container->setDefinition('umanit_life_page.check_email.swiftmailer', $definition);
         }
 
-        if ($container->has('mailer.mailer')) {
+        if ($container->has('mailer.default_transport')) {
             $definition = new Definition(SmtpMailerChecker::class);
             $definition->setArgument(0, $container->getDefinition('mailer.default_transport'));
             $definition->addTag('umanit_life_page.service_checker');
