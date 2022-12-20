@@ -24,14 +24,14 @@ class DefineCheckersPass implements CompilerPassInterface
 
     private function setDatabaseChecker(ContainerBuilder $container): void
     {
-        if ($container->hasExtension('doctrine')) {
+        if ($container->has('doctrine.orm.default_entity_manager')) {
             $definition = new Definition(DoctrineChecker::class);
             $definition->setArgument(0, $container->getDefinition('doctrine.orm.default_entity_manager'));
             $definition->addTag('umanit_life_page.service_checker');
             $container->setDefinition('umanit_life_page.check_database.doctrine', $definition);
         }
 
-        if ($container->hasExtension('pomm')) {
+        if ($container->has('pomm')) {
             $definition = new Definition(PommChecker::class);
             $definition->setArgument(0, $container->getDefinition('pomm'));
             $definition->addTag('umanit_life_page.service_checker');
@@ -41,7 +41,7 @@ class DefineCheckersPass implements CompilerPassInterface
 
     private function setMailerChecker(ContainerBuilder $container): void
     {
-        if ($container->hasExtension('swiftmailer')) {
+        if ($container->has('swiftmailer.mailer.default')) {
             $definition = new Definition(SwiftmailerChecker::class);
             $definition->setArgument(0, $container->getDefinition('swiftmailer.mailer.default'));
             $definition->addTag('umanit_life_page.service_checker');
