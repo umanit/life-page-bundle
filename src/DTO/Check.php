@@ -6,17 +6,19 @@ namespace Umanit\LifePageBundle\DTO;
 
 final class Check implements CheckInterface
 {
+    private const STATUS_OK = 'OK';
+    private const STATUS_KO = 'KO';
+
     /** @var string */
     private $name;
 
-    /** @var string|null [OK|KO] */
+    /** @var bool|null */
     private $status;
 
-    public function __construct(string $name, ?bool $checkStatus)
+    public function __construct(string $name, ?bool $status)
     {
         $this->name = $name;
-
-        $this->applyStatus($checkStatus);
+        $this->status = $status;
     }
 
     public function getName(): string
@@ -24,19 +26,17 @@ final class Check implements CheckInterface
         return $this->name;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?bool
     {
         return $this->status;
     }
 
-    private function applyStatus(?bool $checkStatus): void
+    public function getTextStatus(): string
     {
-        if (null === $checkStatus) {
-            $this->status = null;
-
-            return;
+        if (null === $this->status) {
+            throw new \LogicException('Can not get text status if there is no status!');
         }
 
-        $this->status = $checkStatus ? 'OK' : 'KO';
+        return $this->status ? self::STATUS_OK : self::STATUS_KO;
     }
 }
