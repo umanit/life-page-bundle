@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Umanit\LifePageBundle\Checker\Database;
 
-use PommProject\Foundation\Pomm;
+use PommProject\Foundation\Session\Session;
 use Umanit\LifePageBundle\Checker\CheckerInterface;
 
 final class PommChecker implements CheckerInterface
 {
-    /** @var Pomm */
-    private $pomm;
+    /** @var Session */
+    private $pommSession;
 
-    public function __construct(Pomm $pomm)
+    public function __construct(Session $pommSession)
     {
-        $this->pomm = $pomm;
+        $this->pommSession = $pommSession;
     }
 
     public function getName(): string
@@ -25,7 +25,7 @@ final class PommChecker implements CheckerInterface
     public function check(): bool
     {
         try {
-            $this->pomm->getDefaultSession()->getConnection()->getClientEncoding();
+            $this->pommSession->getConnection()->getClientEncoding();
 
             return true;
         } catch (\Throwable $e) {
