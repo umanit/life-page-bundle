@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Umanit\LifePageBundle\Checker\Database\DoctrineChecker;
 use Umanit\LifePageBundle\Checker\Database\PommChecker;
+use Umanit\LifePageBundle\Checker\Elasticsearch\FosElasticaChecker;
 use Umanit\LifePageBundle\Checker\Mailer\SmtpMailerChecker;
 use Umanit\LifePageBundle\Checker\Mailer\SwiftmailerChecker;
 use Umanit\LifePageBundle\Checker\Messenger\MessengerChecker;
@@ -20,6 +21,7 @@ class DefineCheckersPass implements CompilerPassInterface
         $this->setDatabaseChecker($container);
         $this->setMailerChecker($container);
         $this->setMessengerChecker($container);
+        $this->setElasticsearchChecker($container);
     }
 
     private function setDatabaseChecker(ContainerBuilder $container): void
@@ -63,6 +65,16 @@ class DefineCheckersPass implements CompilerPassInterface
             $definition->setArgument(0, $container->getDefinition('messenger.transport.async'));
             $definition->addTag('umanit_life_page.service_checker');
             $container->setDefinition('umanit_life_page.check_messenger.async_transport', $definition);
+        }
+    }
+
+    private function setElasticsearchChecker(ContainerBuilder $container): void
+    {
+        if ($container->has('fos_elastica.client.default')) {
+            $definition = new Definition(FosElasticaChecker::class);
+            $definition->setArgument(0, $container->getDefinition('fos_elastica.client.default'));
+            $definition->addTag('umanit_life_page.service_checker');
+            $container->setDefinition('umanit_life_page.check_elasticsearch.fos_elastica', $definition);
         }
     }
 }
