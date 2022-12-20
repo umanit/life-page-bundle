@@ -9,9 +9,12 @@ use Umanit\LifePageBundle\DTO\CheckCollection;
 
 final class ServiceChecker implements ServiceCheckerInterface
 {
-    /** @var CheckerInterface[] */
+    /** @var iterable<CheckerInterface> */
     private $services;
 
+    /**
+     * @param iterable<CheckerInterface> $services
+     */
     public function __construct(iterable $services)
     {
         $this->services = $services;

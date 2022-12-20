@@ -6,6 +6,9 @@ namespace Umanit\LifePageBundle\DTO;
 
 interface CheckCollectionInterface
 {
+    /**
+     * @return array<CheckInterface>
+     */
     public function getChecks(): array;
 
     public function addCheck(CheckInterface $check): void;

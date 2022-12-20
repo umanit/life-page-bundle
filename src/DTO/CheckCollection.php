@@ -6,7 +6,7 @@ namespace Umanit\LifePageBundle\DTO;
 
 final class CheckCollection implements CheckCollectionInterface
 {
-    /** @var CheckInterface[] */
+    /** @var array<CheckInterface> */
     private $checks;
 
     public function __construct()
