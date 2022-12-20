@@ -60,14 +60,22 @@ class DefineCheckersPass implements CompilerPassInterface
 
     private function setMessengerChecker(ContainerBuilder $container): void
     {
-        foreach ($container->findTaggedServiceIds('messenger.receiver') as $serviceId => $_) {
+        foreach ($container->findTaggedServiceIds('messenger.receiver') as $serviceId => $tags) {
+            $alias = null;
+            foreach ($tags as $tag) {
+                if (!isset($tag['alias'])) {
+                    continue;
+                }
+
+                $alias = $tag['alias'];
+                break;
+            }
+
             $definition = new Definition(MessengerChecker::class);
             $definition->setArgument(0, $container->getDefinition($serviceId));
+            $definition->setArgument(1, $alias);
             $definition->addTag('umanit_life_page.service_checker');
-            $container->setDefinition(
-                'umanit_life_page.check_messenger.'.str_replace('.', '_', $serviceId),
-                $definition
-            );
+            $container->setDefinition('umanit_life_page.check_messenger.'.$alias, $definition);
         }
     }
 

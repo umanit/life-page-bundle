@@ -13,14 +13,24 @@ final class MessengerChecker implements CheckerInterface
     /** @var TransportInterface */
     private $transport;
 
-    public function __construct(TransportInterface $transport)
+    /** @var string|null */
+    private $alias;
+
+    public function __construct(TransportInterface $transport, ?string $alias = null)
     {
         $this->transport = $transport;
+        $this->alias = $alias;
     }
 
     public function getName(): string
     {
-        return '[Messenger] Transport connection';
+        $alias = null;
+
+        if (null !== $this->alias) {
+            $alias = sprintf(' "%s"', $this->alias);
+        }
+
+        return sprintf('[Messenger] Transport%s connection', $alias);
     }
 
     public function check(): ?bool
