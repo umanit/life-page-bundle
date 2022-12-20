@@ -60,11 +60,14 @@ class DefineCheckersPass implements CompilerPassInterface
 
     private function setMessengerChecker(ContainerBuilder $container): void
     {
-        if ($container->has('messenger.transport.async')) {
+        foreach ($container->findTaggedServiceIds('messenger.receiver') as $serviceId => $_) {
             $definition = new Definition(MessengerChecker::class);
-            $definition->setArgument(0, $container->getDefinition('messenger.transport.async'));
+            $definition->setArgument(0, $container->getDefinition($serviceId));
             $definition->addTag('umanit_life_page.service_checker');
-            $container->setDefinition('umanit_life_page.check_messenger.async_transport', $definition);
+            $container->setDefinition(
+                'umanit_life_page.check_messenger.'.str_replace('.', '_', $serviceId),
+                $definition
+            );
         }
     }
 
