@@ -23,10 +23,10 @@ final class SmtpMailerChecker implements CheckerInterface
         return '[Mailer] SMTP connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         if (!$this->transport instanceof SmtpTransport) {
-            return true;
+            return null;
         }
 
         try {

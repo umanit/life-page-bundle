@@ -22,7 +22,7 @@ final class DoctrineChecker implements CheckerInterface
         return '[Doctrine] Database connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         try {
             $this->entityManager->getConnection()->connect();

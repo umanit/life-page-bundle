@@ -8,5 +8,5 @@ interface CheckerInterface
 {
     public function getName(): string;
 
-    public function check(): bool;
+    public function check(): ?bool;
 }

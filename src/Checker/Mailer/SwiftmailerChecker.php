@@ -21,7 +21,7 @@ final class SwiftmailerChecker implements CheckerInterface
         return '[Swiftmailer] SMTP connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         return $this->mailer->getTransport()->ping();
     }

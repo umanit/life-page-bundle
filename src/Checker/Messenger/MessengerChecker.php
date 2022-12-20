@@ -23,10 +23,10 @@ final class MessengerChecker implements CheckerInterface
         return '[Messenger] Transport connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         if (!$this->transport instanceof MessageCountAwareInterface) {
-            return true;
+            return null;
         }
 
         try {

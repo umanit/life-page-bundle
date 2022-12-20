@@ -22,7 +22,7 @@ class FosElasticaChecker implements CheckerInterface
         return '[Elasticsearch] Client connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         try {
             $this->client->getVersion();

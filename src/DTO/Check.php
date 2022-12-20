@@ -9,10 +9,10 @@ final class Check implements CheckInterface
     /** @var string */
     private $name;
 
-    /** @var string [OK|KO] */
+    /** @var string|null [OK|KO] */
     private $status;
 
-    public function __construct(string $name, bool $checkStatus)
+    public function __construct(string $name, ?bool $checkStatus)
     {
         $this->name = $name;
 
@@ -24,13 +24,19 @@ final class Check implements CheckInterface
         return $this->name;
     }
 
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    private function applyStatus(bool $checkStatus): void
+    private function applyStatus(?bool $checkStatus): void
     {
+        if (null === $checkStatus) {
+            $this->status = null;
+
+            return;
+        }
+
         $this->status = $checkStatus ? 'OK' : 'KO';
     }
 }

@@ -22,7 +22,7 @@ final class PommChecker implements CheckerInterface
         return '[Pomm] Database connection';
     }
 
-    public function check(): bool
+    public function check(): ?bool
     {
         try {
             $this->pommSession->getConnection()->getClientEncoding();

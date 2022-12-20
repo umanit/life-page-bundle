@@ -21,7 +21,12 @@ class ResponseBuilder implements ResponseBuilderInterface
         $response = '';
 
         foreach ($this->checker->checkAll() as $check) {
-            $response .= sprintf('%s: %s', $check->getName(), $check->getStatus()).PHP_EOL;
+            $status = $check->getStatus();
+            if (null === $status) {
+                continue;
+            }
+
+            $response .= sprintf('%s: %s', $check->getName(), $status).PHP_EOL;
         }
 
         return new Response($response);
