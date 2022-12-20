@@ -11,6 +11,7 @@ use Umanit\LifePageBundle\Checker\Database\DoctrineChecker;
 use Umanit\LifePageBundle\Checker\Database\PommChecker;
 use Umanit\LifePageBundle\Checker\Mailer\SmtpMailerChecker;
 use Umanit\LifePageBundle\Checker\Mailer\SwiftmailerChecker;
+use Umanit\LifePageBundle\Checker\Messenger\MessengerChecker;
 
 class DefineCheckersPass implements CompilerPassInterface
 {
@@ -18,6 +19,7 @@ class DefineCheckersPass implements CompilerPassInterface
     {
         $this->setDatabaseChecker($container);
         $this->setMailerChecker($container);
+        $this->setMessengerChecker($container);
     }
 
     private function setDatabaseChecker(ContainerBuilder $container): void
@@ -51,6 +53,16 @@ class DefineCheckersPass implements CompilerPassInterface
             $definition->setArgument(0, $container->getDefinition('mailer.default_transport'));
             $definition->addTag('umanit_life_page.service_checker');
             $container->setDefinition('umanit_life_page.check_email.smtp_mailer', $definition);
+        }
+    }
+
+    private function setMessengerChecker(ContainerBuilder $container): void
+    {
+        if ($container->has('messenger.transport.async')) {
+            $definition = new Definition(MessengerChecker::class);
+            $definition->setArgument(0, $container->getDefinition('messenger.transport.async'));
+            $definition->addTag('umanit_life_page.service_checker');
+            $container->setDefinition('umanit_life_page.check_messenger.async_transport', $definition);
         }
     }
 }
