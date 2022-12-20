@@ -19,6 +19,7 @@ class ResponseBuilder implements ResponseBuilderInterface
     public function buildResponse(): Response
     {
         $response = '';
+        $allOk = 1;
 
         foreach ($this->checker->checkAll() as $check) {
             $status = $check->getStatus();
@@ -26,9 +27,14 @@ class ResponseBuilder implements ResponseBuilderInterface
                 continue;
             }
 
-            $response .= sprintf('%s: %s', $check->getName(), $status).PHP_EOL;
+            $response .= sprintf('%s: %s', $check->getName(), $check->getTextStatus()).PHP_EOL;
+            $allOk &= (int) $status;
         }
 
-        return new Response($response, Response::HTTP_OK, ['Content-Type' => 'text/plain; charset=UTF-8']);
+        return new Response(
+            $response,
+            $allOk ? Response::HTTP_OK : Response::HTTP_SERVICE_UNAVAILABLE,
+            ['Content-Type' => 'text/plain; charset=UTF-8']
+        );
     }
 }
