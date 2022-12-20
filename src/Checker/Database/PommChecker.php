@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Umanit\LifePageBundle\Checker\Database;
 
+use PommProject\Foundation\Pomm;
 use PommProject\Foundation\Session\Session;
 use Umanit\LifePageBundle\Checker\CheckerInterface;
 
@@ -12,9 +13,9 @@ final class PommChecker implements CheckerInterface
     /** @var Session */
     private $pommSession;
 
-    public function __construct(Session $pommSession)
+    public function __construct(Pomm $pomm)
     {
-        $this->pommSession = $pommSession;
+        $this->pommSession = $pomm->getDefaultSession();
     }
 
     public function getName(): string

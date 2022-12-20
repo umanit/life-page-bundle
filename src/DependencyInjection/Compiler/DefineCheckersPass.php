@@ -33,9 +33,9 @@ class DefineCheckersPass implements CompilerPassInterface
             $container->setDefinition('umanit_life_page.check_database.doctrine', $definition);
         }
 
-        if ($container->has('pomm.default_session')) {
+        if ($container->has('pomm')) {
             $definition = new Definition(PommChecker::class);
-            $definition->setArgument(0, $container->getDefinition('pomm.default_session'));
+            $definition->setArgument(0, $container->getDefinition('pomm'));
             $definition->addTag('umanit_life_page.service_checker');
             $container->setDefinition('umanit_life_page.check_database.pomm', $definition);
         }

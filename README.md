@@ -64,7 +64,7 @@ If the service `doctrine.orm.default_entity_manager` exists, a checker is added 
 
 ### `PommChecker`
 
-Using a session, tries to get client encoding.
+Using Pomm, retrieves the default session and tries to get client encoding.
 
 #### Automatic configuration
 
