@@ -29,6 +29,6 @@ class ResponseBuilder implements ResponseBuilderInterface
             $response .= sprintf('%s: %s', $check->getName(), $status).PHP_EOL;
         }
 
-        return new Response($response);
+        return new Response($response, Response::HTTP_OK, ['Content-Type' => 'text/plain; charset=UTF-8']);
     }
 }
