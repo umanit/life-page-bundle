@@ -108,6 +108,15 @@ For each service tagged with `messenger.receiver`, a checker will be added.
 
 ⚠️ If the service is not an instance of `MessageCountAwareInterface`, the checker will be ignored.
 
+## Adding a custom checker
+
+Create a service which extends the `CheckerInterface` and tag it with `umanit_life_page.service_checker`. Your checker
+should now be displayed on the life page.
+
+The method `getName` is used to name the checker on the page while the `check` method is used to determine the status to
+display. If it's `true` then `OK` is shown, if it's `false` then `KO` is shown and if it's `null` the checker is
+ignored.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
