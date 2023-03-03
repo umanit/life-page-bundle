@@ -8,20 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseBuilder implements ResponseBuilderInterface
 {
-    /** @var ServiceCheckerInterface */
-    private $checker;
+    /** @var ServiceCheckerCollectionInterface */
+    private $checkersCollection;
 
-    public function __construct(ServiceCheckerInterface $checker)
+    public function __construct(ServiceCheckerCollectionInterface $checkersCollection)
     {
-        $this->checker = $checker;
+        $this->checkersCollection = $checkersCollection;
     }
 
-    public function buildResponse(): Response
+    public function buildResponse(string $type): Response
     {
         $response = '';
         $allOk = 1;
 
-        foreach ($this->checker->checkAll() as $check) {
+        foreach ($this->checkersCollection->getCheckers($type)->checkAll() as $check) {
             $status = $check->getStatus();
             if (null === $status) {
                 continue;

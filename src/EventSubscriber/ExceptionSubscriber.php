@@ -34,7 +34,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
         }
 
         try {
-            $event->setResponse($this->responseBuilder->buildResponse());
+            $event->setResponse(
+                $this->responseBuilder->buildResponse(
+                    $event->getRequest()->attributes->getAlnum('type', 'all')
+                )
+            );
         } catch (\Throwable $e) {
             // Error on life page rendering, let the application do the job.
         }

@@ -34,12 +34,16 @@ Or, if your prefer customize it, adapt the default declaration:
 
 ```yaml
 umanit_life_page:
-    path: /_life
+    path: /_life/{type}
     controller: umanit_life_page.controller_life_page
     methods: [GET]
+    requirements:
+        type: '[a-zAZ0-9]+'
+    defaults:
+        type: all
 ```
 
-That's it! Your life page should now be accessible at the path `/_life` and some checks already done if your
+That’s it! Your life page should now be accessible at the path `/_life` and some checks already done if your
 configuration meets the requirements.
 
 ## Available checkers
@@ -80,7 +84,7 @@ If the service `fos_elastica.client.default` exists, a checker is added using it
 
 ### `SmtpMailerChecker`
 
-Using a mailer transport, and only if it's an instance of `SmtpTransport`, tries to execute a `NOOP` command on the SMTP
+Using a mailer transport, and only if it’s an instance of `SmtpTransport`, tries to execute a `NOOP` command on the SMTP
 server.
 
 #### Automatic configuration
@@ -99,7 +103,7 @@ If the service `swiftmailer.mailer.default` exists, a checker is added using it.
 
 ### `MessengerChecker`
 
-Using a messenger transport, and only if it's an instance of `MessageCountAwareInterface`, tries to count available
+Using a messenger transport, and only if it’s an instance of `MessageCountAwareInterface`, tries to count available
 messages.
 
 #### Automatic configuration
@@ -114,8 +118,32 @@ Create a service which extends the `CheckerInterface` and tag it with `umanit_li
 should now be displayed on the life page.
 
 The method `getName` is used to name the checker on the page while the `check` method is used to determine the status to
-display. If it's `true` then `OK` is shown, if it's `false` then `KO` is shown and if it's `null` the checker is
+display. If it’s `true` then `OK` is shown, if it’s `false` then `KO` is shown and if it’s `null` the checker is
 ignored.
+
+## Check only specific services
+
+By adding your own service checker service, you can check only specific services if needed. You need to follow this
+steps:
+
+1. Tag some of your services checker with a custom tag ;
+2. declare a new service using the class `Umanit\LifePageBundle\Checker\ServiceChecker`
+    * The service **must** use a `tagged_iterator` as argument, using your custom tag from the previous step.
+    * The service **must** be tag with `umanit_life_page.service_checker_collection` and have a unique `type` value.
+
+**Example:**
+
+ ```xml
+
+<service id="umanit_life_page.critical_services_checker" class="Umanit\LifePageBundle\Checker\ServiceChecker">
+    <argument type="tagged_iterator" tag="umanit_life_page.critical_service_checker" />
+    <tag name="umanit_life_page.service_checker_collection" type="critical" />
+</service>
+ ```
+
+Once it’s done you can access to the check using the path `/_life/{type}`, so with our example `/_life/critical`.
+
+The bundle is already providing the `critical` type and all of it’s checker are using it. 
 
 ## Contributing
 

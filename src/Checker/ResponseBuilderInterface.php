@@ -8,5 +8,5 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface ResponseBuilderInterface
 {
-    public function buildResponse(): Response;
+    public function buildResponse(string $type): Response;
 }
