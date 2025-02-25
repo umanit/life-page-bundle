@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- When services are unavailable, dispatches an event to allow for error handling
+
 ## [1.0.1] - 2023-03-03
 
 ### Added
