@@ -7,7 +7,9 @@
     <services>
         <service id="umanit_life_page.response_builder" class="Umanit\LifePageBundle\Checker\ResponseBuilder">
             <argument type="service" id="umanit_life_page.service_checker_collection" />
+            <argument type="service" id="event_dispatcher" />
         </service>
+
         <service id="Umanit\LifePageBundle\Checker\ResponseBuilderInterface"
                  alias="umanit_life_page.response_builder" />
 

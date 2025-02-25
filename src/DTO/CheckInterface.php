@@ -11,4 +11,6 @@ interface CheckInterface
     public function getStatus(): ?bool;
 
     public function getTextStatus(): string;
+
+    public function __toString(): string;
 }

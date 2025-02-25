@@ -39,4 +39,9 @@ final class Check implements CheckInterface
 
         return $this->status ? self::STATUS_OK : self::STATUS_KO;
     }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }
