@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-02-25
+
 ### Added
 
 - When services are unavailable, dispatches an event to allow for error handling
@@ -21,7 +23,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 First release 🎉
 
-[Unreleased]: https://github.com/umanit/life-page-bundle/compare/1.0.1...main
+[Unreleased]: https://github.com/umanit/life-page-bundle/compare/1.1.0...main
+
+[1.1.0]: https://github.com/umanit/life-page-bundle/compare/1.0.1...1.1.0
 
 [1.0.1]: https://github.com/umanit/life-page-bundle/compare/1.0.0...1.0.1
 
